@@ -49,7 +49,7 @@ public class WebSecuerityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(HttpSecurity http) throws Exception {
 		//super.configure(http);
 		
-		// some basic configure
+//		// some basic configure
 		http.cors().and().csrf().disable()
 		.authorizeRequests()
 		.antMatchers("/static/**").permitAll()
@@ -62,22 +62,24 @@ public class WebSecuerityConfig extends WebSecurityConfigurerAdapter {
 		.successHandler(successHandler)
 		.failureHandler(failHandler)
 		.permitAll()
-		// some configure about logout
-		.and()
-		.logout()
-		.permitAll()
-		// some exception configure
-		.and()
-		//.addFilterBefore(new MyBaseFilter(), UsernamePasswordAuthenticationFilter.class)                           
-		//.addFilterAt(new MyBaseFilter(), UsernamePasswordAuthenticationFilter.class)                           
-		//.addFilterAfter(new MyBaseFilter(), UsernamePasswordAuthenticationFilter.class)
-		.exceptionHandling()
-		.accessDeniedPage("/login")
-		//.authenticationEntryPoint(entryPoint)
-		.and().apply(MyCustomDsl.customDsl())
-		//.flag(true)
-		//.disable()
-
+//		// some configure about logout
+//		.and()
+//		.logout()
+//		.permitAll()
+		 .and()
+		 .sessionManagement()
+//		// some exception configure
+//		.and()
+//		//.addFilterBefore(new MyBaseFilter(), UsernamePasswordAuthenticationFilter.class)                           
+//		//.addFilterAt(new MyBaseFilter(), UsernamePasswordAuthenticationFilter.class)                           
+//		//.addFilterAfter(new MyBaseFilter(), UsernamePasswordAuthenticationFilter.class)
+//		.exceptionHandling()
+//		.accessDeniedPage("/login")
+//		//.authenticationEntryPoint(entryPoint)
+//		.and().apply(MyCustomDsl.customDsl())
+//		//.flag(true)
+//		//.disable()
+//
 		;
 	}
 
