@@ -2,8 +2,6 @@ package org.springboot.module.config;
 
 import java.util.Arrays;
 
-import org.springboot.module.security.MyBaseFilter;
-import org.springboot.module.security.MyCustomDsl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -41,6 +38,7 @@ public class WebSecuerityConfig extends WebSecurityConfigurerAdapter {
 	
 	// @Autowired
 	// private IUserService userService;
+	
 
 	/**
 	 * 重写该方法，设定用户访问权限
@@ -53,6 +51,8 @@ public class WebSecuerityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable()
 		.authorizeRequests()
 		.antMatchers("/static/**").permitAll()
+		//for swagger page access
+		//.antMatchers("/swagger*/**","/webjars/**","/v2/api-docs*/**").permitAll()
 		.antMatchers("/api/security/open/**").hasRole("USER")
 		.antMatchers("/api/security/limit/**").hasRole("ADMIN")
 		.anyRequest().authenticated()
@@ -66,8 +66,6 @@ public class WebSecuerityConfig extends WebSecurityConfigurerAdapter {
 //		.and()
 //		.logout()
 //		.permitAll()
-		 .and()
-		 .sessionManagement()
 //		// some exception configure
 //		.and()
 //		//.addFilterBefore(new MyBaseFilter(), UsernamePasswordAuthenticationFilter.class)                           

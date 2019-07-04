@@ -2,7 +2,10 @@ package org.springboot.module.security;
 
 import java.io.IOException;
 
+import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -20,7 +24,7 @@ public class MyBaseFilter extends AbstractAuthenticationProcessingFilter {
 	
 	
 	public MyBaseFilter() {
-		 super(new AntPathRequestMatcher("/login","POST"));
+		 super(new AntPathRequestMatcher("/**"));
 		 //super(new AntPathRequestMatcher("/api/hello/*"));
 		 System.out.println("### MyBaseFilter.MyBaseFilter()");
 		 authenticationManager = new MyBaseAuthenticationManager();
@@ -40,12 +44,12 @@ public class MyBaseFilter extends AbstractAuthenticationProcessingFilter {
 		this.authenticationManager = authenticationManager;
 	}
 
-//	@Override
-//	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
-//			throws IOException, ServletException {
-//		System.out.println("### MyBaseFilter.doFilter()");
-//		chain.doFilter(req,res); 
-//	}
+	@Override
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+			throws IOException, ServletException {
+		System.out.println("### MyBaseFilter.doFilter()");
+		chain.doFilter(req,res); 
+	}
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
@@ -68,6 +72,8 @@ public class MyBaseFilter extends AbstractAuthenticationProcessingFilter {
 		//}
 		Authentication authenticate = new UsernamePasswordAuthenticationToken("cch", "123456");
 		//Authentication authenticate = new MyBaseAuthentication("cch", "123456");
+		//test
+		SecurityContextHolder.getContext().setAuthentication(authenticate);
 		return authenticate;
 	}
 
