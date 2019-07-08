@@ -1,6 +1,8 @@
 package org.springboot.module.security;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -48,6 +50,20 @@ public class MyBaseFilter extends AbstractAuthenticationProcessingFilter {
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
 		System.out.println("### MyBaseFilter.doFilter()");
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		if(authentication == null) {
+			System.out.println("### authentication is null...");
+			System.out.println("###just mock auth to user: cch ....start");
+			List<MyBaseGrantedAuthority> authority = new ArrayList<>();
+			authority.add(new MyBaseGrantedAuthority("USER"));
+			authority.add(new MyBaseGrantedAuthority("ADMIN"));
+			authentication = new MyBaseAuthentication("cch","123456",authority);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+			System.out.println("###just mock auth to user: cch ....suceess");
+		}else {
+			System.out.println("authentication.isAuthenticated()..." + authentication.isAuthenticated());
+		}
 		chain.doFilter(req,res); 
 	}
 

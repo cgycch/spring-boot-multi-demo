@@ -2,6 +2,7 @@ package org.springboot.module.config;
 
 import java.util.Arrays;
 
+import org.springboot.module.security.MyCustomDsl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -57,11 +58,11 @@ public class WebSecuerityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/api/security/limit/**").hasRole("ADMIN")
 		.anyRequest().authenticated()
 		// some configure about login
-		.and()
-		.formLogin()
-		.successHandler(successHandler)
-		.failureHandler(failHandler)
-		.permitAll()
+//		.and()
+//		.formLogin()
+//		.successHandler(successHandler)
+//		.failureHandler(failHandler)
+//		.permitAll()
 //		// some configure about logout
 //		.and()
 //		.logout()
@@ -74,7 +75,7 @@ public class WebSecuerityConfig extends WebSecurityConfigurerAdapter {
 //		.exceptionHandling()
 //		.accessDeniedPage("/login")
 //		//.authenticationEntryPoint(entryPoint)
-//		.and().apply(MyCustomDsl.customDsl())
+		.and().apply(MyCustomDsl.customDsl())
 //		//.flag(true)
 //		//.disable()
 //

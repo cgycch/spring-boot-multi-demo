@@ -1,5 +1,6 @@
 package org.springboot.module.security;
 
+import org.springframework.security.authentication.AnonymousAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -23,7 +24,8 @@ public class MyCustomDsl extends AbstractHttpConfigurer<MyCustomDsl, HttpSecurit
 		MyBaseFilter myFilter = new MyBaseFilter();
 		myFilter.setFlag(flag);
 		System.out.println("### MyCustomDsl.configure()");
-		builder.addFilterBefore(myFilter, UsernamePasswordAuthenticationFilter.class);
+		builder.authenticationProvider(new MyBaseAuthenticationProvider());
+		//builder.addFilterBefore(myFilter, UsernamePasswordAuthenticationFilter.class);
 		//builder.addFilterAfter(myFilter, UsernamePasswordAuthenticationFilter.class);
 		//builder.addFilterAt(myFilter, UsernamePasswordAuthenticationFilter.class);
 	}
